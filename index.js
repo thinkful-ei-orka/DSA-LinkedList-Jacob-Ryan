@@ -147,6 +147,11 @@ function main() {
   //isEmpty(SLL);
   //findPrevious("Apollo", SLL);
   //findLast(SLL);
+  //   display(SLL.head);
+  //   console.log(reverseList(SLL));
+  //console.log(getThirdFromEnd(SLL));
+  //console.log(middleOfList(SLL));
+  console.log(cycle(CycleList.head));
 }
 
 function display(head) {
@@ -184,7 +189,7 @@ function findPrevious(item, list) {
   while (currNode.next.value !== item) {
     currNode = currNode.next;
   }
-  console.log(currNode.value);
+  return currNode;
 }
 
 function findLast(list) {
@@ -196,14 +201,74 @@ function findLast(list) {
   while (currNode.next !== null) {
     currNode = currNode.next;
   }
-  console.log(currNode);
+  return currNode;
 }
 
 function reverseList(list) {
-  if (list.head === null) {
-    console.log("No items in list");
-    return;
+  let currentPointer = list.head;
+  let target = currentPointer.next;
+
+  list.head.next = null;
+
+  while (target !== null) {
+    let newCurrentPointer = target.next;
+    target.next = currentPointer;
+    currentPointer = target;
+    target = newCurrentPointer;
   }
+
+  list.head = currentPointer;
+  return list.head;
+}
+
+function getThirdFromEnd(list) {
+  if (size(list) <= 2) {
+    return "Less than 3 items in array";
+  }
+  let initialPos = list.head;
+  let lastNode = findLast(list);
+  let secondToLast = findPrevious(lastNode.value, list);
+  let thirdToLast = findPrevious(secondToLast.value, list);
+  return thirdToLast;
+}
+
+function middleOfList(list) {
+  if (list.head === null) {
+    return null;
+  }
+
+  let halfwayParse = list.head;
+  let lengthParse = list.head;
+
+  while (lengthParse !== null && lengthParse.next !== null) {
+    halfwayParse = halfwayParse.next;
+    lengthParse = lengthParse.next.next;
+  }
+
+  return halfwayParse.value;
+}
+
+const CycleList = new LinkedList();
+CycleList.insertFirst("Apollo");
+CycleList.insertFirst("Boomer");
+CycleList.insertFirst("Husker");
+CycleList.insertFirst("Helo");
+CycleList.insertFirst("Husker");
+function cycle(head) {
+  let currentNode = head;
+  let nextNode = null;
+
+  while (currentNode !== null) {
+    nextNode = currentNode.next;
+    if (nextNode.next === null) {
+      return false;
+    }
+    if (nextNode.next.value === currentNode.value) {
+      return true;
+    }
+    currentNode = currentNode.next;
+  }
+  return false;
 }
 
 main();
