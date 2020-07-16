@@ -103,16 +103,19 @@ class LinkedList {
         }
         let counter = 0;
         let keyNode = this.head;
-        while((counter !== index) || keyNode.next !== null) {
-            console.log(keyNode);
+        while(counter <= index) {
+
+            if(keyNode.next === null && counter !== index) {
+                console.log('Index out of bounds. Please try a different number');
+                return;
+            } else if(counter === index) {
+                console.log('inserting');
+                this.insertBefore(keyNode.value, item);
+                return;
+            }
             keyNode = keyNode.next;
             counter++;
-        }
-        if(keyNode.next === null && counter !== index) {
-            console.log('Index out of bounds. Please try a different number');
-            return;
-        }
-        this.insertBefore(keyNode.value, item);
+        } 
     }
 }
 
@@ -133,9 +136,9 @@ function main () {
     // console.log(SLL.find('Boomer'));
     // SLL.insertBefore('Helo', 'different test');
     // console.log(SLL.find('Boomer'));
-    console.log(SLL.find('Helo'));
-    SLL.insertAt(3, 'I hope this works');
-    console.log(SLL.find('Helo'));
+    console.log(SLL.find('Starbuck'));
+    SLL.insertAt(5, 'I hope this works');
+    console.log(SLL.find('Starbuck'));
 
 }
 
